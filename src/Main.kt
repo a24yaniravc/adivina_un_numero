@@ -1,3 +1,5 @@
+import java.io.File
+
 fun getnumber():Int{ // Función encargada de conseguir le número aleatorio
     var n = (1..9).toList()
     n = n.shuffled() // Mezcla los números de la lista
@@ -8,7 +10,13 @@ fun getnumber():Int{ // Función encargada de conseguir le número aleatorio
         numSecreto+=n[i]
     }
 
-    return numSecreto.toInt()
+    //Archivo de memoria
+    var fileName = "Numero_Almacenado.txt"
+    val file = File(fileName)
+
+    file.writeText(numSecreto)
+
+    return numSecreto.toInt() // Devuelve el número secreto
 }
 
 fun comprobacion(entrada:String, numero:String) {
@@ -74,11 +82,18 @@ fun iniciar_juego() { // Función encargada de ejecutar el juego
     }
 }
 
-fun ultimo_intento(){ // Función encargada de almazenar y entregar el último resultado
-// Sin hacer
+fun ultimo_intento() { // Función encargada de almazenar y entregar el último resultado
+    val file = File("Numero_Almacenado.txt") // Localiza el archivo
+
+    if (file.exists()) {
+        val data = file.readText() // Lee el archivo
+        println(data)
+    } else {
+        println("No ha habido intentos anteriores en esta sesión.")
+    }
 }
 
-fun main(){
+fun main() {
     var juego = 1
 
     while (juego != 0) {
@@ -94,9 +109,13 @@ fun main(){
         println("- - - - - -")
 
         when (opcion) {
-            1 -> iniciar_juego() // Invoca la función juego
-            2 -> ultimo_intento()
-            3 -> juego = 0
+            1 -> iniciar_juego() // Invoca la función que ejecuta el juego
+            2 -> ultimo_intento() // Invoca la función que lee el archivo cuyo contenido es el número anterior
+            3 -> {
+                juego = 0
+                val file = File("Numero_Almacenado.txt")
+                file.delete()
+            }
         }
     }
 }
