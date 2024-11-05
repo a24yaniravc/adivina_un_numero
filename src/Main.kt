@@ -75,7 +75,7 @@ fun iniciar_juego() { // Función encargada de ejecutar el juego
 }
 
 fun ultimo_intento(){ // Función encargada de almazenar y entregar el último resultado
-
+// Sin hacer
 }
 
 fun main(){
