@@ -19,103 +19,123 @@ fun getnumber():Int{ // Función encargada de conseguir le número aleatorio
     return numSecreto.toInt() // Devuelve el número secreto
 }
 
-fun comprobacion(entrada:String, numero:String) {
-    for (i in 0..3) {
-        if (entrada[i] == numero[i]) { // Totalemente correctos (acertados)
-            print("Numeros acertados: ")
-            println(entrada[i])
-        }
-    }
+fun comprobacion(entrada:String, numero:String) { // Re-hacer
+    var acertados = ""
+    var coincidentes = ""
 
     for (i in 0..2) { // Coicidentes
-        for (k in i+1..3) { // No misma posición
+        for (k in i + 1..3) { // No misma posición
             if (entrada[i] == numero[k]) {
-                print("Numeros coincidentes: ")
-                println(entrada[i])
+                coincidentes += entrada[i] + " "
+            }
+        }
+        if (i > 0) {
+            for (k in i - 1..3) {
+                if (entrada[i] == numero[k]) {
+                    coincidentes += entrada[i].toString() + " "
+                }
             }
         }
     }
+
+    if (coincidentes=="") {
+        print(" Numeros coincidentes: " + 0 + "|| ")
+    } else { print(" Numeros coincidentes: " + coincidentes) }
+
+    for (i in 0..3) {
+        if (entrada[i] == numero[i]) { // Totalemente correctos (acertados)
+            acertados += entrada[i].toString() + " "
+        }
+    }
+
+    if (acertados=="") {
+        print("Numeros acertados: " + 0 + "||")
+    } else { print("Numeros acertados: " + acertados + "||")}
 }
 
-fun iniciar_juego() { // Función encargada de ejecutar el juego
-    val number = getnumber()
-    var maxIntentos = 3
-    var intentos = maxIntentos
+    fun iniciar_juego() { // Función encargada de ejecutar el juego
+        val number = getnumber()
+        var maxIntentos = 3
+        var intentos = maxIntentos
 
-    while (intentos != -1) {
-        print("Teclee un número de 4 cifras sin números repetidos: ")
-        var entrada = readln().toInt() // Número adivinado por el usuario
+        println("- - JUEGO - -")
 
-        // Forzar que sean 4 números
-        if (entrada.toString().length != 4) {
-            print("El número es inválido. Por favor, inténtelo de nuevo.")
-            println()
+        while (intentos != -1) {
+            print("Teclee un número de 4 cifras sin números repetidos: ")
+            var entrada = readln().toInt() // Número adivinado por el usuario
+
+            // Forzar que sean 4 números
+            if (entrada.toString().length != 4) {
+                print("El número es inválido. Por favor, inténtelo de nuevo.")
+                println()
+            } else {
+                println()
+
+                when {
+                    entrada == number -> { // Si la entrada coincide con el numero esperado
+                        print("$entrada ")
+                        comprobacion(entrada.toString(), number.toString())
+                        println()
+                        println("Enhorabuena, has adivinado el número.")
+                    }
+
+                    (entrada != number && intentos >= 1) -> { // Si no sucede pero aún hay intentos restantes
+                        print("$entrada ")
+                        comprobacion(entrada.toString(), number.toString())
+                        println()
+                        println("Lo siento, no adivinaste el número secreto.")
+                        println("Intentos restantes: $intentos")
+                        println("- - - - - -")
+                    }
+
+                    (entrada != number && intentos == 0) -> { // Se han terminado los intentos
+                        print("$entrada ")
+                        comprobacion(entrada.toString(), number.toString())
+                        println()
+                        println("Lo siento, no adivinaste el número secreto $number en $maxIntentos intentos.")
+                        println("-- FIN DEL JUEGO --")
+                        println()
+                    }
+                }
+                intentos -= 1
+            }
+        }
+    }
+
+    fun ultimo_intento() { // Función encargada de almazenar y entregar el último resultado
+        val file = File("Numero_Almacenado.txt") // Localiza el archivo
+
+        if (file.exists()) {
+            val data = file.readText() // Lee el archivo
+            println(data)
         } else {
-            println()
-
-            when {
-                entrada == number -> { // Si la entrada coincide con el numero esperado
-                    print("$entrada ")
-                    comprobacion(entrada.toString(), number.toString())
-                    println()
-                    println("Enhorabuena, has adivinado el número.")
-                }
-                (entrada != number && intentos >= 1) -> { // Si no sucede pero aún hay intentos restantes
-                    print("$entrada ")
-                    comprobacion(entrada.toString(), number.toString())
-                    println()
-                    println("Lo siento, no adivinaste el número secreto.")
-                    println("Intentos restantes: $intentos")
-                    println("- - - - - -")
-                }
-                (entrada != number && intentos == 0) -> { // Se han terminado los intentos
-                    print("$entrada ")
-                    comprobacion(entrada.toString(), number.toString())
-                    println()
-                    println("Lo siento, no adivinaste el número secreto $number en $maxIntentos intentos.")
-                    println("-- FIN DEL JUEGO --")
-                    println()
-                }
-            }
-            intentos -= 1
+            println("No ha habido intentos anteriores en esta sesión.")
         }
     }
-}
 
-fun ultimo_intento() { // Función encargada de almazenar y entregar el último resultado
-    val file = File("Numero_Almacenado.txt") // Localiza el archivo
+    fun main() {
+        var juego = 1
 
-    if (file.exists()) {
-        val data = file.readText() // Lee el archivo
-        println(data)
-    } else {
-        println("No ha habido intentos anteriores en esta sesión.")
-    }
-}
+        while (juego != 0) {
+            // Menú
+            println("- - - - - -")
+            println("1. Jugar")
+            println("2. Ver traza de último intento")
+            println("3. Salir")
+            print("opción: ")
 
-fun main() {
-    var juego = 1
+            var opcion = readln().toInt()
 
-    while (juego != 0) {
-        // Menú
-        println("- - - - - -")
-        println("1. Jugar")
-        println("2. Ver traza de último intento")
-        println("3. Salir")
-        print("opción: ")
+            println("- - - - - -")
 
-        var opcion = readln().toInt()
-
-        println("- - - - - -")
-
-        when (opcion) {
-            1 -> iniciar_juego() // Invoca la función que ejecuta el juego
-            2 -> ultimo_intento() // Invoca la función que lee el archivo cuyo contenido es el número anterior
-            3 -> {
-                juego = 0
-                val file = File("Numero_Almacenado.txt")
-                file.delete()
+            when (opcion) {
+                1 -> iniciar_juego() // Invoca la función que ejecuta el juego
+                2 -> ultimo_intento() // Invoca la función que lee el archivo cuyo contenido es el número anterior
+                3 -> {
+                    juego = 0
+                    val file = File("Numero_Almacenado.txt")
+                    file.delete()
+                }
             }
         }
     }
-}
