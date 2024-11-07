@@ -1,7 +1,7 @@
 import java.io.File
 
 fun getnumber():Int{ // Función encargada de conseguir le número aleatorio
-    var n = (1..9).toList()
+    var n = (1..6).toList()
     n = n.shuffled() // Mezcla los números de la lista
     println()
     var numSecreto = ""
@@ -14,7 +14,7 @@ fun getnumber():Int{ // Función encargada de conseguir le número aleatorio
     var fileName = "Numero_Almacenado.txt"
     val file = File(fileName)
 
-    file.writeText(numSecreto)
+    file.writeText(numSecreto + "\n")
 
     return numSecreto.toInt() // Devuelve el número secreto
 }
@@ -39,8 +39,8 @@ fun comprobacion(entrada:String, numero:String) { // Re-hacer
     }
 
     if (coincidentes=="") {
-        print(" Numeros coincidentes: " + 0 + "|| ")
-    } else { print(" Numeros coincidentes: " + coincidentes) }
+        print("|| Numeros coincidentes: " + 0 + "|| ")
+    } else { print("|| Numeros coincidentes: " + coincidentes) }
 
     for (i in 0..3) {
         if (entrada[i] == numero[i]) { // Totalemente correctos (acertados)
@@ -49,14 +49,15 @@ fun comprobacion(entrada:String, numero:String) { // Re-hacer
     }
 
     if (acertados=="") {
-        print("Numeros acertados: " + 0 + "||")
-    } else { print("Numeros acertados: " + acertados + "||")}
+        print("Numeros acertados: " + 0 )
+    } else { print("Numeros acertados: " + acertados)}
 }
 
     fun iniciar_juego() { // Función encargada de ejecutar el juego
         val number = getnumber()
         var maxIntentos = 3
         var intentos = maxIntentos
+        val file = File("Numero_Almacenado.txt")
 
         println("- - JUEGO - -")
 
@@ -69,6 +70,7 @@ fun comprobacion(entrada:String, numero:String) { // Re-hacer
                 print("El número es inválido. Por favor, inténtelo de nuevo.")
                 println()
             } else {
+                file.appendText(entrada.toString() + "\n") // Añade una línea de texto nueva si es un número válido
                 println()
 
                 when {
@@ -102,12 +104,32 @@ fun comprobacion(entrada:String, numero:String) { // Re-hacer
         }
     }
 
+fun leerlinea(linea:Int):String?{
+    val lineas = File("Numero_Almacenado.txt").readLines()
+
+    // Verificar si la línea existe
+    return if (linea in 1..lineas.size) {
+        lineas[linea - 1] // Kotlin usa índices base 0
+    } else {
+        null // Si la línea no existe
+    }
+}
+
     fun ultimo_intento() { // Función encargada de almazenar y entregar el último resultado
         val file = File("Numero_Almacenado.txt") // Localiza el archivo
+        val intentos = 3
+        var countup = 1
 
+2
         if (file.exists()) {
-            val data = file.readText() // Lee el archivo
-            println(data)
+            // Lee el archivo
+            println("Número secreto: " + leerlinea(1))
+
+            for (i in 2..intentos+2) {
+                val data1 = leerlinea(i)
+                println("Intento $countup: " + data1)
+                countup += 1
+                }
         } else {
             println("No ha habido intentos anteriores en esta sesión.")
         }
