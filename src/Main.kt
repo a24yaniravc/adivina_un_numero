@@ -1,4 +1,9 @@
 import java.io.File
+const val RESET = "\u001B[0m"
+const val BG_GREEN = "\u001B[42m"
+const val BG_YELLOW = "\u001B[43m"
+const val BG_WHITE = "\u001B[47m"
+const val BLACK = "\u001B[30m"
 
 fun getnumber():Int{ // Función encargada de conseguir le número aleatorio
     var n = (1..6).toList()
@@ -38,7 +43,8 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Re-hacer
         }
     }
 
-    return print(" $aciertos" + " $coincidencias")
+    print("${BG_GREEN} $aciertos " + "${RESET} " + "${BG_YELLOW} $coincidencias ") // Color e impresión
+    print("${RESET}")
 }
 
     fun iniciar_juego(maxIntentos:Int) { // Función encargada de ejecutar el juego
@@ -62,14 +68,14 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Re-hacer
 
                 when {
                     entrada == number -> { // Si la entrada coincide con el numero esperado
-                        print("$entrada ")
+                        print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
                         comprobacion(entrada.toString(), number.toString())
                         println()
                         println("Enhorabuena, has adivinado el número.")
                     }
 
                     (entrada != number && intentos >= 1) -> { // Si no sucede pero aún hay intentos restantes
-                        print("$entrada ")
+                        print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
                         comprobacion(entrada.toString(), number.toString())
                         println()
                         println("Lo siento, no adivinaste el número secreto.")
@@ -78,7 +84,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Re-hacer
                     }
 
                     (entrada != number && intentos == 0) -> { // Se han terminado los intentos
-                        print("$entrada ")
+                        print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
                         comprobacion(entrada.toString(), number.toString())
                         println()
                         println("Lo siento, no adivinaste el número secreto $number en $maxIntentos intentos.")
