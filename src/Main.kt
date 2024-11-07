@@ -19,38 +19,26 @@ fun getnumber():Int{ // Función encargada de conseguir le número aleatorio
     return numSecreto.toInt() // Devuelve el número secreto
 }
 
-fun comprobacion(entrada:String, numero:String) { // Re-hacer
-    var acertados = ""
-    var coincidentes = ""
+fun comprobacion(entrada:String, numeroSecret:String) { // Re-hacer
+    var aciertos = 0
+    var coincidencias = 0
 
-    for (i in 0..2) { // Coicidentes
-        for (k in i + 1..3) { // No misma posición
-            if (entrada[i] == numero[k]) {
-                coincidentes += entrada[i] + " "
-            }
-        }
-        if (i > 0) {
-            for (k in i - 1..3) {
-                if (entrada[i] == numero[k]) {
-                    coincidentes += entrada[i].toString() + " "
-                }
-            }
+    val noAcierto = mutableListOf<Char>()
+
+    for (i in 0 until 4) {
+        if (entrada[i] == numeroSecret[i]) { // Misma posicion
+            aciertos++
+        } else { noAcierto.add(numeroSecret[i]) }
+    }
+
+    for (i in 0 until 4) { // No misma posición
+        if (numeroSecret[i] != entrada[i] && noAcierto.contains(entrada[i])) {
+            coincidencias++
+            noAcierto.remove(entrada[i])
         }
     }
 
-    if (coincidentes=="") {
-        print("|| Numeros coincidentes: " + 0 + "|| ")
-    } else { print("|| Numeros coincidentes: " + coincidentes + "|| ") }
-
-    for (i in 0..3) {
-        if (entrada[i] == numero[i]) { // Totalemente correctos (acertados)
-            acertados += entrada[i].toString() + " "
-        }
-    }
-
-    if (acertados=="") {
-        print("Numeros acertados: " + 0 )
-    } else { print("Numeros acertados: " + acertados)}
+    return print(" $aciertos" + " $coincidencias")
 }
 
     fun iniciar_juego(maxIntentos:Int) { // Función encargada de ejecutar el juego
