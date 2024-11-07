@@ -40,7 +40,7 @@ fun comprobacion(entrada:String, numero:String) { // Re-hacer
 
     if (coincidentes=="") {
         print("|| Numeros coincidentes: " + 0 + "|| ")
-    } else { print("|| Numeros coincidentes: " + coincidentes) }
+    } else { print("|| Numeros coincidentes: " + coincidentes + "||") }
 
     for (i in 0..3) {
         if (entrada[i] == numero[i]) { // Totalemente correctos (acertados)
