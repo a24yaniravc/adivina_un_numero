@@ -53,9 +53,8 @@ fun comprobacion(entrada:String, numero:String) { // Re-hacer
     } else { print("Numeros acertados: " + acertados)}
 }
 
-    fun iniciar_juego() { // Función encargada de ejecutar el juego
+    fun iniciar_juego(maxIntentos:Int) { // Función encargada de ejecutar el juego
         val number = getnumber()
-        var maxIntentos = 3
         var intentos = maxIntentos
         val file = File("Numero_Almacenado.txt")
 
@@ -115,9 +114,8 @@ fun leerlinea(linea:Int):String?{
     }
 }
 
-    fun ultimo_intento() { // Función encargada de almazenar y entregar el último resultado
+    fun ultimo_intento(maxIntentos: Int) { // Función encargada de almazenar y entregar el último resultado
         val file = File("Numero_Almacenado.txt") // Localiza el archivo
-        val intentos = 3
         var countup = 1
 
 2
@@ -125,7 +123,7 @@ fun leerlinea(linea:Int):String?{
             // Lee el archivo
             println("Número secreto: " + leerlinea(1))
 
-            for (i in 2..intentos+2) {
+            for (i in 2..maxIntentos+2) {
                 val data1 = leerlinea(i)
                 println("Intento $countup: " + data1)
                 countup += 1
@@ -137,6 +135,7 @@ fun leerlinea(linea:Int):String?{
 
     fun main() {
         var juego = 1
+        var maxIntentos = 3
 
         while (juego != 0) {
             // Menú
@@ -151,8 +150,8 @@ fun leerlinea(linea:Int):String?{
             println("- - - - - -")
 
             when (opcion) {
-                1 -> iniciar_juego() // Invoca la función que ejecuta el juego
-                2 -> ultimo_intento() // Invoca la función que lee el archivo cuyo contenido es el número anterior
+                1 -> iniciar_juego(maxIntentos) // Invoca la función que ejecuta el juego
+                2 -> ultimo_intento(maxIntentos) // Invoca la función que lee el archivo cuyo contenido es el número anterior
                 3 -> {
                     juego = 0
                     val file = File("Numero_Almacenado.txt")
