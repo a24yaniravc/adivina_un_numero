@@ -135,7 +135,7 @@ fun leerlinea(linea:Int):String?{
 
     fun main() {
         var juego = 1
-        var maxIntentos = 3
+        var maxIntentos = 3 // CAMBIAR NUMERO MAXIMO DE INTENTOS
 
         while (juego != 0) {
             // Menú
