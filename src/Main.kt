@@ -52,14 +52,13 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
         println("\n- - JUEGO - -")
 
         while (Countdown != -1) {
-            print("Teclee un número de 4 cifras sin números repetidos: ")
+            print("Asegurándose de que cada dígito esté entre el 0 y el 7 (ambos excluídos), teclee un número de 4 cifras sin números repetidos: ")
             val entradaString = readln() // Número adivinado por el usuario
 
-            var validezEntrada = true
             var entrada = 0
 
-            if (entradaString.isBlank()) {
-                validezEntrada = false
+            if (entradaString.isBlank() ||(entradaString.toIntOrNull() == null)) {
+                var validezEntrada = false
             } else { entrada = entradaString.toInt() }
 
                 var validezTamanho = false
@@ -80,7 +79,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                 }
 
                 if (validezDigito == false) {
-                    println("El número es inválido. Por favor, asegúrese de que cada uno de los digitos es menor que 6 e inténtelo de nuevo.")
+                    println("El número es inválido. Por favor, asegúrese de que cada uno de los digitos es menor que 7 y mayor que 0 e inténtelo de nuevo.")
                     println("- - - - - -")
                 } else if (validezTamanho == true) {
                     file.appendText(entrada.toString() + "\n") // Añade una línea de texto nueva si es un número válido
@@ -161,27 +160,39 @@ fun leerlinea(linea:Int):String?{
             println("3. Salir")
             print("Opción: ")
 
-            val opcion = readln().toInt()
+            val entrada = readln()
+            var opcion = 0
 
-            print("- - - - - -")
 
-            when (opcion) {
-                1 -> {
-                    println()
-                    iniciar_juego() // Invoca la función que ejecuta el juego
+            if (entrada != "1" && entrada != "2" && entrada != "3") {
+                print("- - - - - -")
+                println("\nERROR. Introduzca una opción correcta.")
+            } else {
+                opcion = entrada.toInt()
+
+                print("- - - - - -")
+
+                when (opcion) {
+                    1 -> {
+                        println()
+                        iniciar_juego() // Invoca la función que ejecuta el juego
                     }
-                2 -> {
-                    println()
-                    ultimo_intento() // Invoca la función que lee el archivo cuyo contenido es el número anterior
+
+                    2 -> {
+                        println()
+                        ultimo_intento() // Invoca la función que lee el archivo cuyo contenido es el número anterior
+                    }
+
+                    3 -> {
+                        print(" - - - - ")
+                        println(
+                            "\nGracias por jugar!\n- - - - - - - - - -" +
+                                    ""
+                        )
+                        juego = 0
+                        file.delete()
+                    }
                 }
-                3 -> {
-                    print(" - - - - ")
-                    println("\nGracias por jugar!\n- - - - - - - - - -" +
-                            "")
-                    juego = 0
-                    file.delete()
-                }
-                else -> println("ERROR. Introduzca una opción correcta.")
             }
         }
     }
