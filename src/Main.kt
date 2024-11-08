@@ -57,7 +57,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
 
             var entrada = 0
 
-            if (entradaString.isBlank() ||(entradaString.toIntOrNull() == null)) {
+            if (entradaString.isBlank() ||(entradaString.toIntOrNull() == null)) { // Nos aseguramos de que la entrada no esté vacía o de que sea una letra
                 var validezEntrada = false
             } else { entrada = entradaString.toInt() }
 
