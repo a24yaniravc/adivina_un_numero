@@ -34,20 +34,13 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
     var aciertos = 0
     var coincidencias = 0
 
-    val noAcierto = mutableListOf<Char>() // Una vez comprobados, almacenaremos los números que NO son aciertos
-
     for (i in 0 until intentosMax) {
         if (entrada[i] == numeroSecret[i]) { // Misma posicion (ACERTADO)
             aciertos++
         } else {
-            noAcierto.add(numeroSecret[i])
-        }
-    }
-
-    for (i in 0 until intentosMax) {
-        if ((numeroSecret[i] != entrada[i]) && noAcierto.contains(entrada[i])) { // No misma posición (COINCIDENTE)
-            coincidencias++
-            noAcierto.remove(entrada[i]) // Lo eliminamos para evitar que se vuelva a comprobar
+            if (numeroSecret.contains(entrada[i])){
+                coincidencias++
+            }
         }
     }
 
