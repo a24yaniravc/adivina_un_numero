@@ -149,7 +149,7 @@ fun leerlinea(linea:Int):String?{
 
     fun main() {
         var juego = 1
-        val intentosBase = 9 // CAMBIAR NUMERO DE INTENTOS (Siempre es 1 más del que ponemos)
+        val intentosBase = 3 // CAMBIAR NUMERO DE INTENTOS (Siempre es 1 más del que ponemos)
 
         while (juego != 0) {
             // Menú
