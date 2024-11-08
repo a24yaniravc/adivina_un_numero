@@ -47,14 +47,13 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
 
     fun iniciar_juego() { // Función encargada de ejecutar el juego
         val number = getnumber()
-        var Countdown = intentosBase
+        var Countdown = intentosBase-1
 
         println("\n- - JUEGO - -")
 
         while (Countdown != -1) {
             print("Asegurándose de que cada dígito esté entre el 0 y el 7 (ambos excluídos), teclee un número de 4 cifras sin números repetidos: ")
             val entradaString = readln() // Número adivinado por el usuario
-            Countdown -= 1
 
             var entrada = 0
 
@@ -112,6 +111,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                             println()
                         }
                     }
+                    Countdown -= 1
                 }
             }
         }
