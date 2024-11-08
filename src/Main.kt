@@ -161,14 +161,12 @@ fun leerlinea(linea:Int):String?{
             print("Opción: ")
 
             val entrada = readln()
-            var opcion = 0
-
 
             if (entrada != "1" && entrada != "2" && entrada != "3") {
                 print("- - - - - -")
                 println("\nERROR. Introduzca una opción correcta.")
             } else {
-                opcion = entrada.toInt()
+                var opcion = entrada.toInt()
 
                 print("- - - - - -")
 
