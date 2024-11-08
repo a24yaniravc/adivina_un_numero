@@ -137,7 +137,7 @@ fun leerlinea(linea:Int):String?{
         val file = File("Numero_Almacenado.txt") // Localiza el archivo
         var countup = 1
 
-        println("\n- - LOGS - -")
+        println("\n- - - - LOGS - - - -")
 
         if (file.exists()) {
             println("Número secreto: " + leerlinea(1))
@@ -148,10 +148,12 @@ fun leerlinea(linea:Int):String?{
                 println("Intento $countup: " + data1)
                 countup += 1
                 }
+            println("- - - LOGS END - - -\n")
         } else { // Ya que eliminamos el archivo siempre que se cierre el juego
             println("No ha habido intentos anteriores en esta sesión.\n")
+            println("- - - LOGS END - - -\n")
         }
-        println("- - LOGS END - -\n")
+
     }
 
     fun main() {
