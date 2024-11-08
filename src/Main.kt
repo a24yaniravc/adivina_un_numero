@@ -9,7 +9,6 @@ const val BLACK = "\u001B[30m"
 
 // Variables Globales
 val intentosBase = 3 // CAMBIAR NUMERO DE INTENTOS (Siempre es 1 más del que ponemos)
-val intentosMax= intentosBase+1 // INTENTOS MAX DE VERDAD
 
 fun getnumber():Int{ // Función encargada de conseguir el número aleatorio
     var n = (1..6).toList()
@@ -34,7 +33,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
     var aciertos = 0
     var coincidencias = 0
 
-    for (i in 0 until intentosMax) {
+    for (i in 0 .. intentosBase) {
         if (entrada[i] == numeroSecret[i]) { // Misma posicion (ACERTADO)
             aciertos++
         } else {
@@ -105,7 +104,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                         print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
                         comprobacion(entrada.toString(), number.toString())
                         println()
-                        println("Lo siento, no adivinaste el número secreto $number en $intentosMax intentos.")
+                        println("Lo siento, no adivinaste el número secreto $number en ${intentosBase+1} intentos.")
                         println("-- FIN DEL JUEGO --")
                         println()
                     }
