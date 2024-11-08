@@ -54,62 +54,68 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
         while (Countdown != -1) {
             print("Teclee un número de 4 cifras sin números repetidos: ")
             val entradaString = readln() // Número adivinado por el usuario
-            val entrada = entradaString.toInt()
 
-            var validezTamanho = false
-            var validezDigito = true
+            var validezEntrada = true
+            var entrada = 0
 
-            // Forzar que sean 4 números
-            if (entrada.toString().length != 4) {
-                println("El número es inválido. Por favor, inténtelo de nuevo.")
-                println("- - - - - -")
-            } else {
-                validezTamanho = true
-                for (digito in entradaString) {
-                    if (digito !in '1'..'6') { // Forzar que ninguno sea mayor que 6 o menor que 1
-                        validezDigito = false
-                        break
+            if (entradaString.isBlank()) {
+                validezEntrada = false
+            } else { entrada = entradaString.toInt() }
+
+                var validezTamanho = false
+                var validezDigito = true
+
+                // Forzar a que sean 4 números y no esté vacío
+                if (entrada.toString().length != 4) {
+                    println("El número es inválido. Por favor, inténtelo de nuevo.")
+                    println("- - - - - -")
+                } else {
+                    validezTamanho = true
+                    for (digito in entradaString) {
+                        if (digito !in '1'..'6') { // Forzar que ninguno sea mayor que 6 o menor que 1
+                            validezDigito = false
+                            break
+                        }
                     }
                 }
-            }
 
-            if (validezDigito == false) {
-                println("El número es inválido. Por favor, asegúrese de que cada uno de los digitos es menor que 6 e inténtelo de nuevo.")
-                println("- - - - - -")
-            } else if (validezTamanho == true) {
-                file.appendText(entrada.toString() + "\n") // Añade una línea de texto nueva si es un número válido
-                println()
+                if (validezDigito == false) {
+                    println("El número es inválido. Por favor, asegúrese de que cada uno de los digitos es menor que 6 e inténtelo de nuevo.")
+                    println("- - - - - -")
+                } else if (validezTamanho == true) {
+                    file.appendText(entrada.toString() + "\n") // Añade una línea de texto nueva si es un número válido
+                    println()
 
-                when {
-                    entrada == number -> { // Si la entrada coincide con el numero esperado
-                        print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
-                        comprobacion(entrada.toString(), number.toString())
-                        println()
-                        println("Enhorabuena, has adivinado el número.")
+                    when {
+                        entrada == number -> { // Si la entrada coincide con el numero esperado
+                            print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
+                            comprobacion(entrada.toString(), number.toString())
+                            println()
+                            println("Enhorabuena, has adivinado el número.")
+                        }
+
+                        (Countdown >= 1) -> { // Si no sucede pero aún hay intentos restantes
+                            print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
+                            comprobacion(entrada.toString(), number.toString())
+                            println()
+                            println("Lo siento, no adivinaste el número secreto.")
+                            println("Intentos restantes: $Countdown")
+                            println("- - - - - -")
+                        }
+
+                        (Countdown == 0) -> { // Se han terminado los intentos
+                            print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
+                            comprobacion(entrada.toString(), number.toString())
+                            println()
+                            println("Lo siento, no adivinaste el número secreto $number en ${intentosBase + 1} intentos.")
+                            println("-- FIN DEL JUEGO --")
+                            println()
+                        }
                     }
-
-                    (Countdown >= 1) -> { // Si no sucede pero aún hay intentos restantes
-                        print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
-                        comprobacion(entrada.toString(), number.toString())
-                        println()
-                        println("Lo siento, no adivinaste el número secreto.")
-                        println("Intentos restantes: $Countdown")
-                        println("- - - - - -")
-                    }
-
-                    (Countdown == 0) -> { // Se han terminado los intentos
-                        print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
-                        comprobacion(entrada.toString(), number.toString())
-                        println()
-                        println("Lo siento, no adivinaste el número secreto $number en ${intentosBase+1} intentos.")
-                        println("-- FIN DEL JUEGO --")
-                        println()
-                    }
+                    Countdown -= 1
                 }
-                Countdown -= 1
             }
         }
-    }
 
 fun leerlinea(linea:Int):String?{
     val lineas = file.readLines()
@@ -157,15 +163,25 @@ fun leerlinea(linea:Int):String?{
 
             val opcion = readln().toInt()
 
-            println("- - - - - -")
+            print("- - - - - -")
 
             when (opcion) {
-                1 -> iniciar_juego() // Invoca la función que ejecuta el juego
-                2 -> ultimo_intento() // Invoca la función que lee el archivo cuyo contenido es el número anterior
+                1 -> {
+                    println()
+                    iniciar_juego() // Invoca la función que ejecuta el juego
+                    }
+                2 -> {
+                    println()
+                    ultimo_intento() // Invoca la función que lee el archivo cuyo contenido es el número anterior
+                }
                 3 -> {
+                    print(" - - - - ")
+                    println("\nGracias por jugar!\n- - - - - - - - - -" +
+                            "")
                     juego = 0
                     file.delete()
                 }
+                else -> println("ERROR. Introduzca una opción correcta.")
             }
         }
     }
