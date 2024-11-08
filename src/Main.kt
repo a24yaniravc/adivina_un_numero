@@ -11,7 +11,7 @@ const val BLACK = "\u001B[30m"
 val intentosBase = 3 // CAMBIAR NUMERO DE INTENTOS (Siempre es 1 más del que ponemos)
 
 fun getnumber():Int{ // Función encargada de conseguir el número aleatorio
-    var n = (1..6).toList().shuffled() // Mezcla los números de la lista
+    val n = (1..6).toList().shuffled() // Mezcla los números de la lista
 
     var numSecreto = ""
 
