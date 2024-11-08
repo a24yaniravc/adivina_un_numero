@@ -7,6 +7,10 @@ const val BG_YELLOW = "\u001B[43m"
 const val BG_WHITE = "\u001B[47m"
 const val BLACK = "\u001B[30m"
 
+// Variables Globales
+val intentosBase = 3 // CAMBIAR NUMERO DE INTENTOS (Siempre es 1 más del que ponemos)
+val intentosMax= intentosBase+1 // INTENTOS MAX DE VERDAD
+
 fun getnumber():Int{ // Función encargada de conseguir el número aleatorio
     var n = (1..6).toList()
     n = n.shuffled() // Mezcla los números de la lista
@@ -32,11 +36,15 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
 
     val noAcierto = mutableListOf<Char>() // Una vez comprobados, almacenaremos los números que NO son aciertos
 
-    for (i in 0 until 4) {
+    for (i in 0 until intentosMax) {
         if (entrada[i] == numeroSecret[i]) { // Misma posicion (ACERTADO)
             aciertos++
-        } else { noAcierto.add(numeroSecret[i]) }
+        } else {
+            noAcierto.add(numeroSecret[i])
+        }
+    }
 
+    for (i in 0 until intentosMax) {
         if ((numeroSecret[i] != entrada[i]) && noAcierto.contains(entrada[i])) { // No misma posición (COINCIDENTE)
             coincidencias++
             noAcierto.remove(entrada[i]) // Lo eliminamos para evitar que se vuelva a comprobar
@@ -46,15 +54,14 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
     print("${BG_GREEN} $aciertos " + "${RESET} " + "${BG_YELLOW} $coincidencias " + "${RESET}") // Color e impresión
 }
 
-    fun iniciar_juego(intentosBase:Int) { // Función encargada de ejecutar el juego
+    fun iniciar_juego() { // Función encargada de ejecutar el juego
         val number = getnumber()
-        var intentos = intentosBase
-        val intentosMax = intentosBase + 1
+        var Countdown = intentosBase
         val file = File("Numero_Almacenado.txt")
 
         println("\n- - JUEGO - -")
 
-        while (intentos != -1) {
+        while (Countdown != -1) {
             print("Teclee un número de 4 cifras sin números repetidos: ")
             val entradaString = readln() // Número adivinado por el usuario
             val entrada = entradaString.toInt()
@@ -92,16 +99,16 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                         println("Enhorabuena, has adivinado el número.")
                     }
 
-                    (entrada != number && intentos >= 1) -> { // Si no sucede pero aún hay intentos restantes
+                    (entrada != number && Countdown >= 1) -> { // Si no sucede pero aún hay intentos restantes
                         print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
                         comprobacion(entrada.toString(), number.toString())
                         println()
                         println("Lo siento, no adivinaste el número secreto.")
-                        println("Intentos restantes: $intentos")
+                        println("Intentos restantes: $Countdown")
                         println("- - - - - -")
                     }
 
-                    (entrada != number && intentos == 0) -> { // Se han terminado los intentos
+                    (entrada != number && Countdown == 0) -> { // Se han terminado los intentos
                         print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
                         comprobacion(entrada.toString(), number.toString())
                         println()
@@ -110,7 +117,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                         println()
                     }
                 }
-                intentos -= 1
+                Countdown -= 1
             }
         }
     }
@@ -126,7 +133,7 @@ fun leerlinea(linea:Int):String?{
     }
 }
 
-    fun ultimo_intento(intentosBase: Int) { // Función encargada de almazenar y entregar el último resultado
+    fun ultimo_intento() { // Función encargada de almazenar y entregar el último resultado
         val file = File("Numero_Almacenado.txt") // Localiza el archivo
         var countup = 1
 
@@ -144,12 +151,11 @@ fun leerlinea(linea:Int):String?{
         } else { // Ya que eliminamos el archivo siempre que se cierre el juego
             println("No ha habido intentos anteriores en esta sesión.\n")
         }
-        println("- - LOGS END - -")
+        println("- - LOGS END - -\n")
     }
 
     fun main() {
         var juego = 1
-        val intentosBase = 3 // CAMBIAR NUMERO DE INTENTOS (Siempre es 1 más del que ponemos)
 
         while (juego != 0) {
             // Menú
@@ -164,8 +170,8 @@ fun leerlinea(linea:Int):String?{
             println("- - - - - -")
 
             when (opcion) {
-                1 -> iniciar_juego(intentosBase) // Invoca la función que ejecuta el juego
-                2 -> ultimo_intento(intentosBase) // Invoca la función que lee el archivo cuyo contenido es el número anterior
+                1 -> iniciar_juego() // Invoca la función que ejecuta el juego
+                2 -> ultimo_intento() // Invoca la función que lee el archivo cuyo contenido es el número anterior
                 3 -> {
                     juego = 0
                     val file = File("Numero_Almacenado.txt")
