@@ -150,7 +150,7 @@ fun leerlinea(linea:Int):String?{
                 }
             println("- - - LOGS END - - -\n")
         } else { // Ya que eliminamos el archivo siempre que se cierre el juego
-            println("No ha habido intentos anteriores en esta sesión.\n")
+            print("No ha habido intentos anteriores en esta sesión.\n")
             println("- - - LOGS END - - -\n")
         }
 
