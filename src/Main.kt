@@ -8,7 +8,7 @@ const val BG_WHITE = "\u001B[47m"
 const val BLACK = "\u001B[30m"
 
 // Variables Globales
-val intentosBase = 3 // CAMBIAR NUMERO DE INTENTOS (Siempre es 1 más del que ponemos)
+val intentosBase = 3 // CAMBIAR NUMERO DE INTENTOS
 val file = File("Numero_Almacenado.txt")
 
 fun getnumber():Int{ // Función encargada de conseguir el número aleatorio
@@ -54,6 +54,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
         while (Countdown != -1) {
             print("Asegurándose de que cada dígito esté entre el 0 y el 7 (ambos excluídos), teclee un número de 4 cifras sin números repetidos: ")
             val entradaString = readln() // Número adivinado por el usuario
+            Countdown -= 1
 
             var entrada = 0
 
@@ -83,7 +84,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                     println("- - - - - -")
                 } else if (validezTamanho == true) {
                     file.appendText(entrada.toString() + "\n") // Añade una línea de texto nueva si es un número válido
-                    println()
+                    println("  NM    A   C")
 
                     when {
                         entrada == number -> { // Si la entrada coincide con el numero esperado
@@ -106,12 +107,11 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                             print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
                             comprobacion(entrada.toString(), number.toString())
                             println()
-                            println("Lo siento, no adivinaste el número secreto $number en ${intentosBase + 1} intentos.")
+                            println("Lo siento, no adivinaste el número secreto $number en $intentosBase intentos.")
                             println("-- FIN DEL JUEGO --")
                             println()
                         }
                     }
-                    Countdown -= 1
                 }
             }
         }
