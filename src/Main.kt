@@ -66,10 +66,6 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
             var validezDigito = true
             val digitosUnicos = entradaString.toSet() // No permite números repetidos
 
-            // BOOELAN = true/false
-
-            // Forzar a que no esté vacío
-
             if (entradaString.length!=4){ // Comprueba el tamaño del String
                 valideztamanho = false
             } else {
@@ -81,7 +77,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                 }
             }
 
-            if ((digitosUnicos.size != 4) || (valideztamanho == false)) { // No permite números repetidos
+            if ((digitosUnicos.size != 4) || (valideztamanho == false)) {
                 println("El número es inválido. Por favor, inténtelo de nuevo.")
                 println("- - - - - -")
             } else if (validezDigito != true) {
