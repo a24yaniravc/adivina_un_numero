@@ -65,7 +65,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
             }
 
             var validezDigito = true
-            val digitosUnicos = entradaString.toSet()
+            val digitosUnicos = entradaString.toSet() // No permite números repetidos
 
             // BOOELAN = true/false
 
