@@ -89,10 +89,10 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                 }
             }
 
-            if (validezRepetido == false) {
+            if (validezRepetido != true) {
                 println("El número es inválido. Por favor, inténtelo de nuevo.")
                 println("- - - - - -")
-            } else if (validezDigito == false) {
+            } else if (validezDigito != true) {
                     println("El número es inválido. Por favor, asegúrese de que cada uno de los digitos es menor que 7 y mayor que 0 e inténtelo de nuevo.")
                     println("- - - - - -")
                 } else if (validezTamanho == true) {
@@ -180,7 +180,7 @@ fun leerlinea(linea:Int):String?{
                 print("- - - - - -")
                 println("\nERROR. Introduzca una opción correcta.")
             } else {
-                var opcion = entrada.toInt()
+                val opcion = entrada.toInt()
 
                 print("- - - - - -")
 
