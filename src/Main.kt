@@ -21,8 +21,6 @@ fun getnumber():Int{ // Función encargada de conseguir el número aleatorio
     }
 
     //Archivo de memoria
-    val file = File("Numero_Almacenado.txt")
-
     file.writeText(numSecreto + "\n")
 
     return numSecreto.toInt() // Devuelve el número secreto
