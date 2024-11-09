@@ -8,7 +8,7 @@ const val BG_WHITE = "\u001B[47m"
 const val BLACK = "\u001B[30m"
 
 // Variables Globales
-val intentosBase = 5 // CAMBIAR NUMERO DE INTENTOS
+val intentosBase = 3 // CAMBIAR NUMERO DE INTENTOS
 val file = File("Numero_Almacenado.txt")
 
 fun getnumber():Int{ // Función encargada de conseguir el número aleatorio
