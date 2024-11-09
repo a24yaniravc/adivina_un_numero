@@ -8,7 +8,7 @@ const val BG_WHITE = "\u001B[47m"
 const val BLACK = "\u001B[30m"
 
 // Variables Globales
-val intentosBase = 3 // CAMBIAR NUMERO DE INTENTOS
+val intentosBase = 10 // CAMBIAR NUMERO DE INTENTOS
 val file = File("Numero_Almacenado.txt")
 
 fun getnumber():Int{ // Función encargada de conseguir el número aleatorio
@@ -46,11 +46,11 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
 
     fun iniciar_juego() { // Función encargada de ejecutar el juego
         val number = getnumber()
-        var Countdown = intentosBase-1
+        var countdown = intentosBase-1
 
         println("\n- - JUEGO - -")
 
-        while (Countdown != -1) {
+        while (countdown != -1) {
             print("Asegurándose de que cada dígito esté entre el 0 y el 7 (ambos excluídos), teclee un número de 4 cifras sin números repetidos: ")
             val entradaString = readln() // Número adivinado por el usuario
 
@@ -62,20 +62,26 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                 entrada = entradaString.toInt()
             }
 
+            var valideztamanho = true
             var validezDigito = true
             val digitosUnicos = entradaString.toSet() // No permite números repetidos
 
             // BOOELAN = true/false
 
             // Forzar a que no esté vacío
-            for (digito in entradaString) {
-                if (digito !in '1'..'6') { // Forzar que ninguno sea mayor que 6 o menor que 1
-                    validezDigito = false
-                    break
+
+            if (entradaString.length!=4){ // Comprueba el tamaño del String
+                valideztamanho = false
+            } else {
+                for (digito in entradaString) {
+                    if (digito !in '1'..'6') { // Forzar que ninguno sea mayor que 6 o menor que 1
+                        validezDigito = false
+                        break
+                    }
                 }
             }
 
-            if (digitosUnicos.size != 4) { // No permite números repetidos
+            if ((digitosUnicos.size != 4) || (valideztamanho == false)) { // No permite números repetidos
                 println("El número es inválido. Por favor, inténtelo de nuevo.")
                 println("- - - - - -")
             } else if (validezDigito != true) {
@@ -91,18 +97,19 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                             comprobacion(entrada.toString(), number.toString())
                             println()
                             println("Enhorabuena, has adivinado el número.")
+                            break
                         }
 
-                        (Countdown >= 1) -> { // Si no sucede pero aún hay intentos restantes
+                        (countdown >= 1) -> { // Si no sucede pero aún hay intentos restantes
                             print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
                             comprobacion(entrada.toString(), number.toString())
                             println()
                             println("Lo siento, no adivinaste el número secreto.")
-                            println("Intentos restantes: $Countdown")
+                            println("Intentos restantes: $countdown")
                             println("- - - - - -")
                         }
 
-                        (Countdown == 0) -> { // Se han terminado los intentos
+                        (countdown == 0) -> { // Se han terminado los intentos
                             print("${BLACK}${BG_WHITE} $entrada " + "${RESET} ")
                             comprobacion(entrada.toString(), number.toString())
                             println()
@@ -111,19 +118,22 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                             println()
                         }
                     }
-                    Countdown -= 1
+                    countdown -= 1
                 }
             }
+
+
         }
 
-fun leerlinea(linea:Int):String?{
+fun leerlinea(linea:Int):String{
     val lineas = file.readLines()
 
     // Verificar si la línea existe
-    return if (linea in 1..lineas.size) {
-        lineas[linea - 1] // Ya que Kotlin inicia la cuenta en 0
+
+    if (linea in 1..intentosBase+2 && linea <= lineas.size) {
+        return lineas[linea - 1] // Ya que Kotlin inicia la cuenta en 0
     } else {
-        null // Si la línea no existe
+        return "No existe." // Si la línea no existe
     }
 }
 
