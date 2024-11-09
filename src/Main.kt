@@ -8,7 +8,7 @@ const val BG_WHITE = "\u001B[47m"
 const val BLACK = "\u001B[30m"
 
 // Variables Globales
-val intentosBase = 3 // CAMBIAR NUMERO DE INTENTOS
+val intentosBase = 5 // CAMBIAR NUMERO DE INTENTOS
 val file = File("Numero_Almacenado.txt")
 
 fun getnumber():Int{ // Función encargada de conseguir el número aleatorio
@@ -32,7 +32,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
     var aciertos = 0
     var coincidencias = 0
 
-    for (i in 0 .. intentosBase) {
+    for (i in 0 until 4) {
         if (entrada[i] == numeroSecret[i]) { // Misma posicion (ACERTADO)
             aciertos++
         } else {
@@ -57,15 +57,25 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
 
             var entrada = 0
 
-            if (entradaString.isBlank() ||(entradaString.toIntOrNull() == null)) { // Nos aseguramos de que la entrada no esté vacía o de que sea una letra
+            if (entradaString.isBlank() || (entradaString.toIntOrNull() == null)) { // Nos aseguramos de que la entrada no esté vacía o de que no sea una letra
                 var validezEntrada = false
-            } else { entrada = entradaString.toInt() }
+            } else {
+                entrada = entradaString.toInt()
+            }
 
-                var validezTamanho = false
-                var validezDigito = true
+            var validezRepetido = false
+            var validezTamanho = false
+            var validezDigito = true
 
-                // Forzar a que sean 4 números y no esté vacío
-                if (entrada.toString().length != 4) {
+            // BOOELAN = true/false
+
+            // Forzar a que sean 4 números y no esté vacío
+
+            val digitosUnicos = entradaString.toSet()
+
+            if (digitosUnicos.size == entradaString.length) {
+                validezRepetido = true
+                if (entradaString.length != 4) {
                     println("El número es inválido. Por favor, inténtelo de nuevo.")
                     println("- - - - - -")
                 } else {
@@ -77,8 +87,12 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                         }
                     }
                 }
+            }
 
-                if (validezDigito == false) {
+            if (validezRepetido == false) {
+                println("El número es inválido. Por favor, inténtelo de nuevo.")
+                println("- - - - - -")
+            } else if (validezDigito == false) {
                     println("El número es inválido. Por favor, asegúrese de que cada uno de los digitos es menor que 7 y mayor que 0 e inténtelo de nuevo.")
                     println("- - - - - -")
                 } else if (validezTamanho == true) {
@@ -136,7 +150,7 @@ fun leerlinea(linea:Int):String?{
             println("Número secreto: " + leerlinea(1))
 
             // Lee el archivo
-            for (i in 2..intentosBase+2) { // Leeremos el archivo linea por linea
+            for (i in 2..intentosBase+1) { // Leeremos el archivo linea por linea
                 val data1 = leerlinea(i)
                 println("Intento $countup: $data1")
                 countup += 1
