@@ -45,6 +45,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
     print("${BG_GREEN} $aciertos " + "${RESET} " + "${BG_YELLOW} $coincidencias " + "${RESET}") // Color e impresión
 }
 
+
     fun iniciar_juego() { // Función encargada de ejecutar el juego
         val number = getnumber()
         var Countdown = intentosBase-1
@@ -63,39 +64,26 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                 entrada = entradaString.toInt()
             }
 
-            var validezRepetido = false
-            var validezTamanho = false
             var validezDigito = true
+            val digitosUnicos = entradaString.toSet()
 
             // BOOELAN = true/false
 
-            // Forzar a que sean 4 números y no esté vacío
-
-            val digitosUnicos = entradaString.toSet()
-
-            if (digitosUnicos.size == entradaString.length) {
-                validezRepetido = true
-                if (entradaString.length != 4) {
-                    println("El número es inválido. Por favor, inténtelo de nuevo.")
-                    println("- - - - - -")
-                } else {
-                    validezTamanho = true
-                    for (digito in entradaString) {
-                        if (digito !in '1'..'6') { // Forzar que ninguno sea mayor que 6 o menor que 1
-                            validezDigito = false
-                            break
-                        }
-                    }
+            // Forzar a que no esté vacío
+            for (digito in entradaString) {
+                if (digito !in '1'..'6') { // Forzar que ninguno sea mayor que 6 o menor que 1
+                    validezDigito = false
+                    break
                 }
             }
 
-            if (validezRepetido != true) {
+            if (digitosUnicos.size != 4) { // No permite números repetidos
                 println("El número es inválido. Por favor, inténtelo de nuevo.")
                 println("- - - - - -")
             } else if (validezDigito != true) {
                     println("El número es inválido. Por favor, asegúrese de que cada uno de los digitos es menor que 7 y mayor que 0 e inténtelo de nuevo.")
                     println("- - - - - -")
-                } else if (validezTamanho == true) {
+                } else {
                     file.appendText(entrada.toString() + "\n") // Añade una línea de texto nueva si es un número válido
                     println("  NM    A   C")
 
