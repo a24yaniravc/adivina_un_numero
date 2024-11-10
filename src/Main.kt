@@ -126,10 +126,10 @@ fun leerlinea(linea:Int):String{
 
     // Verificar si la línea existe
 
-    if (linea in 1..intentosBase+2 && linea <= lineas.size) {
-        return lineas[linea - 1] // Ya que Kotlin inicia la cuenta en 0
+    return if(linea in 1..intentosBase+2 && linea <= lineas.size) {
+        lineas[linea - 1] // Ya que Kotlin inicia la cuenta en 0
     } else {
-        return "No existe." // Si la línea no existe
+        "No existe." // Si la línea no existe
     }
 }
 
