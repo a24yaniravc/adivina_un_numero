@@ -8,7 +8,8 @@ const val BG_WHITE = "\u001B[47m"
 const val BLACK = "\u001B[30m"
 
 // Variables Globales
-val intentosBase = 10 // CAMBIAR NUMERO DE INTENTOS
+val intentosBase = 5 // CAMBIAR NUMERO DE INTENTOS
+val cifraNum = 4 // CIFRAS DEL NUMERO
 val file = File("Numero_Almacenado.txt")
 
 fun getnumber():Int{ // Función encargada de conseguir el número aleatorio
@@ -16,7 +17,7 @@ fun getnumber():Int{ // Función encargada de conseguir el número aleatorio
 
     var numSecreto = ""
 
-    for (i in 0 until 4){ // Escoge solo los 4 primeros números de la lista
+    for (i in 0 until cifraNum){ // Escoge solo los 4 primeros números de la lista
         numSecreto+=n[i]
     }
 
@@ -30,7 +31,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
     var aciertos = 0
     var coincidencias = 0
 
-    for (i in 0 until 4) {
+    for (i in 0 until cifraNum) {
         if (entrada[i] == numeroSecret[i]) { // Misma posicion (ACERTADO)
             aciertos++
         } else {
@@ -51,7 +52,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
         println("\n- - JUEGO - -")
 
         while (countdown != -1) {
-            print("Asegurándose de que cada dígito esté entre el 0 y el 7 (ambos excluídos), teclee un número de 4 cifras sin números repetidos: ")
+            print("Asegurándose de que cada dígito esté entre el 0 y el 7 (ambos excluídos), teclee un número de $cifraNum cifras sin números repetidos: ")
             val entradaString = readln() // Número adivinado por el usuario
 
             var entrada = 0
@@ -66,7 +67,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
             var validezDigito = true
             val digitosUnicos = entradaString.toSet() // No permite números repetidos
 
-            if (entradaString.length!=4){ // Comprueba el tamaño del String
+            if (entradaString.length!=cifraNum){ // Comprueba el tamaño del String
                 valideztamanho = false
             } else {
                 for (digito in entradaString) {
@@ -77,7 +78,7 @@ fun comprobacion(entrada:String, numeroSecret:String) { // Función encargada de
                 }
             }
 
-            if ((digitosUnicos.size != 4) || (valideztamanho == false)) {
+            if ((digitosUnicos.size != cifraNum) || (valideztamanho == false)) {
                 println("El número es inválido. Por favor, inténtelo de nuevo.")
                 println("- - - - - -")
             } else if (validezDigito != true) {
